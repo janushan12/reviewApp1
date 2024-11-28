@@ -50,9 +50,9 @@ function App() {
   const handleSortChange = () => {
     const newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
     setSortOrder(newSortOrder);
-    setReviews([...reviews].sort((a, b) => newSortOrder === 'asc' 
-    ? new Date(a["Last Modified Date"]) - new Date(b["Last Modified Date"]) 
-    : new Date(b["Last Modified Date"]) - new Date(a["Last Modified Date"])));
+    setReviews([...reviews].sort((a, b) => newSortOrder === 'asc'
+      ? new Date(a["Last Modified Date"]) - new Date(b["Last Modified Date"])
+      : new Date(b["Last Modified Date"]) - new Date(a["Last Modified Date"])));
   };
 
   // Filter and sort reviews
@@ -68,6 +68,17 @@ function App() {
   const closeModal = () => {
     setIsModalOpen(false); // Close the modal
     clearCurrentReview(); // Clear the current review when modal is closed
+  };
+
+  // render the stars for rating
+  const renderStars = (rating, maxRating = 5) => {
+    let stars = [];
+    for (let i = 0; i <= maxRating; i++) {
+      stars.push(
+        <span key={i} className={`star ${i < rating ? "filled" : "empty"}`}>★</span>
+      );
+    }
+    return stars;
   };
 
   return (
@@ -97,7 +108,7 @@ function App() {
           <div key={review.RID} className="review-item">
             <h2>{review["Book Title"]}</h2>
             <p><strong>Author:</strong>{review["Book Author"]}</p>
-            <p><strong>Rating:</strong>{review.Rating}</p>
+            <p><strong>Rating:</strong>{renderStars(review.Rating, 4)}</p>
             <p>{review["Review Text"]}</p>
             <p><small><strong>Last Modified Date:</strong>{new Date(review["Last Modified Date"]).toLocaleDateString()}</small></p>
 
@@ -117,7 +128,7 @@ function App() {
               currentReview={currentReview}
               fetchReviews={fetchReviews}
               clearCurrentReview={closeModal}
-              />
+            />
           </div>
         </div>
       )}

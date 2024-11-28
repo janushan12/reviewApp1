@@ -180,3 +180,16 @@ button[type="submit"] {
 button[type="submit"]:hover {
   background-color: #0056b3;
 }
+
+.star {
+  font-size: 1.5em;
+  color: #ddd;
+}
+
+.star.filled {
+  color: #ffcc00;
+}
+
+.star.empty {
+  color: #ddd;
+}
